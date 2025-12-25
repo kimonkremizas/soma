@@ -3,7 +3,14 @@ default_platform(:android)
 platform :android do
   desc "Build and upload to Firebase App Distribution"
   lane :deploy do
-    gradle(task: ':composeApp:assembleDebug')
+    version_code = ENV['VERSION_CODE'] || 1
+
+    gradle(
+      task: ':composeApp:assembleDebug',
+      properties: {
+        "versionCode" => version_code
+      }
+    )
 
     firebase_app_distribution(
       app: ENV['FIREBASE_APP_ID'],

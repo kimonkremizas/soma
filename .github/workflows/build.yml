@@ -39,4 +39,5 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          VERSION_CODE: ${{ github.run_number }}
         run: bundle exec fastlane deploy

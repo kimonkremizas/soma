@@ -83,7 +83,7 @@ android {
         applicationId = "dk.kimon.soma"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
+        versionCode = providers.gradleProperty("versionCode").getOrElse("1").toInt()
         versionName = "1.0"
     }
     packaging {
