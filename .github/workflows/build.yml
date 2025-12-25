@@ -21,7 +21,6 @@ jobs:
           cache: gradle
 
       - name: Decode google-services.json
-        # Use single quotes to preserve the JSON structure
         run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > composeApp/google-services.json
 
       - name: Grant execute permission for gradlew
@@ -30,10 +29,15 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew :composeApp:assembleDebug
 
-      - name: Upload to Firebase App Distribution
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY_JSON }}
-          file: composeApp/build/outputs/apk/debug/composeApp-debug.apk
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Deploy with Fastlane
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_SERVICE_ACCOUNT_KEY_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY_JSON }}
+        run: bundle exec fastlane deploy
