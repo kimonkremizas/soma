@@ -3,12 +3,11 @@ default_platform(:android)
 platform :android do
   desc "Build and upload to Firebase App Distribution"
   lane :deploy do
-    # Ensure that the service account key is available
-    File.write("service-account.json", ENV['FIREBASE_SERVICE_ACCOUNT_KEY_JSON'])
+    gradle(task: ':composeApp:assembleDebug')
 
     firebase_app_distribution(
       app: ENV['FIREBASE_APP_ID'],
-      android_artifact_path: "composeApp/build/outputs/apk/debug/composeApp-debug.apk",
+      android_artifact_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
       service_credentials_file: "service-account.json"
     )
   end
