@@ -20,14 +20,14 @@ jobs:
           distribution: 'jetbrains'
           cache: gradle
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Decode google-services.json
         run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > composeApp/google-services.json
 
       - name: Decode Service Account Key
         run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY_JSON }}' > service-account.json
-
-      - name: Build with Gradle
-        run: ./gradlew :composeApp:assembleDebug
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
