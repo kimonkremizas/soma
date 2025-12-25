@@ -1,3 +1,5 @@
+fastlane_require 'firebase_app_distribution'
+
 default_platform(:android)
 
 platform :android do
