@@ -62,7 +62,7 @@ fun EntryProviderScope<NavKey>.featureBSection(
     entry<RouteB> {
         Content("Route B") {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = onSubRouteClick) {
+                Button(onClick = { error("This is a test crash") }) {
                     Text("Go to B1")
                 }
             }
