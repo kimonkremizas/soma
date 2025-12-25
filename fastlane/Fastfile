@@ -15,6 +15,7 @@ platform :android do
     firebase_app_distribution(
       app: ENV['FIREBASE_APP_ID'],
       android_artifact_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+      groups: "Testers",
       service_credentials_file: "service-account.json"
     )
   end
