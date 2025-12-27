@@ -1,0 +1,41 @@
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.firebaseAppDistribution)
+    alias(libs.plugins.firebaseCrashlytics)
+}
+
+android {
+    namespace = "dk.kimon.soma"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+
+    defaultConfig {
+        applicationId = "dk.kimon.soma"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = providers.gradleProperty("versionCode").getOrElse("1").toInt()
+        versionName = "1.0"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation(project(":composeApp"))
+    implementation(project(":shared"))
+}
