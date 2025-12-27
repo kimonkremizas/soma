@@ -12,9 +12,9 @@ plugins {
 
 kotlin {
     androidLibrary {
-        namespace = "dk.kimon.soma"
+        namespace = "dk.kimon.soma.compose"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
     listOf(
@@ -41,14 +41,6 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(compose.uiTooling)
-            implementation(libs.androidx.activity.compose)
-            implementation(project.dependencies.platform(libs.firebase.bom))
-            implementation(libs.firebase.analytics)
-            implementation(libs.firebase.crashlytics)
-        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)

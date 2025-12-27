@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.googleServices)
     alias(libs.plugins.firebaseAppDistribution)
     alias(libs.plugins.firebaseCrashlytics)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -29,13 +30,19 @@ android {
             isMinifyEnabled = false
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+
+    kotlin {
+        jvmToolchain(jdkVersion = 21)
     }
 }
 
 dependencies {
     implementation(project(":composeApp"))
     implementation(project(":shared"))
+    implementation(project.dependencies.platform(libs.firebase.bom))
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 }
